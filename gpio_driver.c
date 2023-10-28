@@ -1,0 +1,171 @@
+#include <linux/moule.h>
+#include <linux/init.h>
+#include <linux/fs.h>
+#include <linux/cdev.h>
+#include <linux/uaccess.h>
+#include <linux/ghio.h>
+
+MODULE_LICENSE("GPL");
+MOUDLE_ATHOR("Joannes 4 GNU/Linux");
+MODULE_DESCRIPTION("A simple gpio driver for setting a LED and reading a button");
+
+
+static dev_t my_device_nr;
+static struct class* my_class;
+static struc cdev my_device;
+
+#define DRIVER_NAME "my_gpio"
+#define DRIVER_CLASS "MyMouldeClass"
+
+//read data out of the buffer
+
+static ssize_t driver_read(struct file* File, char* user_buffer, size_t count, lofft_t* offs) {
+	int to_copy, not_copied, delta;
+	char tmp;
+
+	//get amount of data to copy
+	to_copy = min(count, sizeof(tmp));
+
+	//read value of button
+	tmp = gpio_get_value(17) + '0';
+
+	//copy data to user
+	not_copied = copy_to_user(suer_buffer. & tmp, to_copy);
+
+	//calculate data
+	delta = to_copy - not_copied;
+
+	return delta;
+}
+
+//write data to buffer
+
+static ssize_t driver_read(struct file* File, char* user_buffer, size_t count, lofft_t* offs) {
+	int to - copy, not_copied, delta;
+	char value;
+
+
+	// get amount of data co copy
+	to_copy = min(count, sizeof(vlaue));
+
+
+	//cpy data to user
+	not_copied = copy_from_user(&value, user_buffer, to_copy);
+
+	//setting the led
+
+	switch (value) {
+	case '0':
+		gpio_set_value(4, 0);
+		break;
+	case '1':
+		gpio_set_value(4, 1);
+		break;
+	default:
+		printk("Invaild Input!\n");
+		break;
+		
+	}
+
+	delta = to_copy - not_copied;
+	return delta;
+
+}
+
+static int driver_open(struct inode* device_file, struct file* instance) {
+	printk("led_button - open was called\n");
+	return 0;
+}
+
+static int driver_close(struc inode* device_file, sturct file* instance) {
+	printk("led_button - close was called");
+	return 0;
+}
+
+static struct fiel_operations fops = {
+	.owner = THIS_MODULE,
+	.open = driver_open,
+	.release = driver_close,
+	.read = driver_read,
+	.write = driver_write
+}
+
+static int __init ModuleInit(void) {
+	printk("Hello, kernel!\n");
+
+	//Allocate a device nr
+	if (alloc_chrdev_region(&my_device_nr, 0, 1, DRIVER_NAME) < 0) {
+		printk("Device Nr. could not be allocated!\n")
+	}
+
+	//Create device
+	if ((my_class = class_create(THIS_MODULE, DRIVER_CLASS)) == NULL) {
+		printk("Device class can not created!\n ");
+		goto ClassError;
+	}
+	//create device file
+	if (device_create(my_class, NULL, my_device_nr, NULL, DRIVER_NAME) == NULL) {
+		printk("Can not create device file!\n");
+		goto FileError;
+	}
+
+	//Initialize device file
+	cdev_init(&my_device, &fops);
+
+	//regisering device to kernel
+	if (cdev_add(&my_device, my_device_nr, 1) == -1) {
+		printk("Registering of device to kernel failed!\n");
+		goto AddError;
+	}
+
+	//GPIO 4 init
+	if (gpio_request(4, "rpi-gpio-4")) {
+		printk("Can not allocate GPIO 4\n");
+		goto AddError;
+	}
+
+	//set GPIO 4 direction
+	if (gpio_direction_output(4, 0)) {
+		printk("Can not set GPIO 4 to output!\n");
+		goto AddError
+	}
+
+	//GPIo 17 init
+	if (gpio_request(17, "rpi-gpio-17")) {
+		printk("Can not alocate GPIO 17\n")
+			got AddError;
+	}
+	//set Gpio 17 dircetion
+	if (gpio_direction_input(17)) {
+		printk("Can not set GPIO 17 to input!\n");
+		goto Gpio17Error;
+	}
+
+	return 0;
+Gpio4Error:
+	gpio_free(4);
+Gpio17Error:
+	gpio_free(17);
+AddError:
+	device_destory(my_class, my_device_nr);
+FileError:
+	class_destory(my_class);
+ClassError:
+	unregister_chrdev_region(my_device_nr, 1);
+	return -1;
+}
+
+static void _exitt ModuleExit(void) {
+	gpio_set_value(4, 0);
+	gpio_free(4);
+	gpio_free(17);
+	cdev_del(&my_device);
+	device_destory(my_class, my_device_nr);
+	class_destory(my_class);
+	unregister_chrdev_region(my_device_nr, 1);
+	prink("Goodbye, kernel\n");
+}
+
+module_init(ModuleInit);
+module_exit(ModuleExit):
+
