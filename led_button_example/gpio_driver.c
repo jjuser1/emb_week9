@@ -146,7 +146,7 @@ static int __init ModuleInit(void) {
 
 	/*GPIo 17 init*/
 	if (gpio_request(17, "rpi-gpio-17")) {
-		printk("Can not alocate GPIO 17\n")
+		printk("Can not alocate GPIO 17\n");
 		goto AddError;
 	}
 	/*set Gpio 17 dircetion*/
@@ -177,12 +177,13 @@ static void __exit ModuleExit(void) {
 	gpio_free(4);
 	gpio_free(17);
 	cdev_del(&my_device);
-	device_destory(my_class, my_device_nr);
-	class_destory(my_class);
+	device_destroy(my_class, my_device_nr);
+	class_destroy(my_class);
 	unregister_chrdev_region(my_device_nr, 1);
 	printk("Goodbye, kernel\n");
 }
 
 module_init(ModuleInit);
 module_exit(ModuleExit);
+
 

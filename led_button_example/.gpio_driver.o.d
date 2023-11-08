@@ -1,5 +1,5 @@
 gpio_driver.o: \
- /home/heung/working/emb_week9/led_button_example/gpio_driver.c \
+ /home/jjuser/working/major_num_example/led_button_example/gpio_driver.c \
  include/linux/compiler-version.h include/linux/kconfig.h \
  include/generated/autoconf.h include/linux/compiler_types.h \
  include/linux/compiler_attributes.h include/linux/compiler-gcc.h \
