@@ -20,10 +20,6 @@ static int driver_close(struct inode* device_file, struct file* instance) {
     return 0;
 }
 
-static int driver_close(struct inode* device_file, struct file* instance) {
-    printk("dev_nr - close was called\n");
-    return 0;
-}
 
 
 static struct file_operations fops = {
