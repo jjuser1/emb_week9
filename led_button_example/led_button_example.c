@@ -10,7 +10,7 @@ int main(int argc, char **argv){
 	char tmp;
 	char prev = 'r';
 
-	int dev = open("/dev/my_gpio/", O_RDWR);
+	int dev = open("/dev/my_gpio/", O_RDWR);// if you want read='O_RDONLY' write='O_WRONLY', read&write='O_RDWR'
 	if(dev == -1 ){
 		printf("opening was not possible\n");
 		return -1;
