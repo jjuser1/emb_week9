@@ -161,9 +161,9 @@ Gpio4Error:
 Gpio17Error:
 	gpio_free(17);
 AddError:
-	device_destory(my_class, my_device_nr);
+	device_destroy(my_class, my_device_nr);
 FileError:
-	class_destory(my_class);
+	class_destroy(my_class);
 ClassError:
 	unregister_chrdev_region(my_device_nr, 1);
 	return -1;
