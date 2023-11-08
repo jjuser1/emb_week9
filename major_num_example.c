@@ -12,7 +12,7 @@ int main(){
 	printf("Opening was successfull!\n");
 	close(dev);
 	return 0;
-		
+	//hi	
 
 
 }
