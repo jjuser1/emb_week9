@@ -27,8 +27,8 @@ static struct file_operations fops = {
     .open = driver_open,
     .release = driver_close
 };
-
-#define MYMAJOR 64 //64
+// 64
+#define MYMAJOR 64
 
 /* This function is called when the module is loaded into the kernel */
 static int __init ModuleInit(void) {
