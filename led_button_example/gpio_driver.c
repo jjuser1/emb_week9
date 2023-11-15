@@ -86,7 +86,7 @@ static int driver_open(struct inode* device_file, struct file* instance) {
 }
 
 static int driver_close(struct inode* device_file, struct file* instance) {
-	printk("led_button - close was called");
+	printk("led_button - close was called\n");
 	return 0;
 }
 
