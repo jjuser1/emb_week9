@@ -146,7 +146,7 @@ static int __init ModuleInit(void) {
 
 	/*GPIo 17 init*/
 	if (gpio_request(17, "rpi-gpio-17")) {
-		printk("Can not alocate GPIO 17\n");
+		printk("Can not allocate GPIO 17\n");
 		goto AddError;
 	}
 	/*set Gpio 17 dircetion*/
