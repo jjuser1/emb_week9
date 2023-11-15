@@ -15,7 +15,7 @@ int main(int argc, char **argv){
 		printf("opening was not possible\n");
 		return -1;
 	}
-	printf("Opening wa successfull!\n");
+	printf("Opening was successfull!\n");
 
 	while(1){
 	read(dev, &buff, 1);
