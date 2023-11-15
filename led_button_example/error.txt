@@ -1,0 +1,21 @@
+make -C ~/working/kernel M=/home/pi/working/emb_week9/led_button_example modules
+make[1]: Entering directory '/home/pi/working/kernel'
+  CC [M]  /home/pi/working/emb_week9/led_button_example/gpio_driver.o
+In file included from ./include/linux/types.h:6,
+                 from ./include/linux/kasan-checks.h:5,
+                 from ./include/asm-generic/rwonce.h:26,
+                 from ./arch/arm64/include/asm/rwonce.h:71,
+                 from ./include/linux/compiler.h:254,
+                 from ./include/linux/build_bug.h:5,
+                 from ./include/linux/container_of.h:5,
+                 from ./include/linux/list.h:5,
+                 from ./include/linux/module.h:12,
+                 from /home/pi/working/emb_week9/led_button_example/gpio_driver.c:1:
+./include/uapi/linux/types.h:5:10: fatal error: asm/types.h: No such file or directory
+    5 | #include <asm/types.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.build:249: /home/pi/working/emb_week9/led_button_example/gpio_driver.o] Error 1
+make[1]: *** [Makefile:1852: /home/pi/working/emb_week9/led_button_example] Error 2
+make[1]: Leaving directory '/home/pi/working/kernel'
+
