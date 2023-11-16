@@ -1,12 +1,13 @@
 obj-m += dev_nr.o
 RESULT = major_num_example
 SRC = $(RESULT).c
-
+KDIR = ~/working/Raspbian/kernel
+CCC = arm-linux-gnueabihf-gcc
 all:
-	make -C ~/working/kernel M=$(PWD) modules
-	gcc -o $(RESULT) $(SRC)
+	make -C $(KDIR) M=$(PWD) modules
+	$(CCC) -o $(RESULT) $(SRC)
 
 clean:
-	make -C $(HOME)/working/kernel M=$(PWD) clean
+	make -C $(KDIR) M=$(PWD) clean
 	rm -f $(RESULT)
 

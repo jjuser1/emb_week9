@@ -1,0 +1,1 @@
+cmd_/home/jjuser/working/emb_week9/dev_nr.ko := arm-linux-gnueabihf-ld -r  -EL -z noexecstack   --build-id=sha1  -T scripts/module.lds -o /home/jjuser/working/emb_week9/dev_nr.ko /home/jjuser/working/emb_week9/dev_nr.o /home/jjuser/working/emb_week9/dev_nr.mod.o;  true
